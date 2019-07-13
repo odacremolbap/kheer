@@ -11,12 +11,14 @@ Kheer is a Go application that runs on Kubernetes using the operator pattern.
 ## Source
 
 Clone the repository
-```
+
+```sh
 git clone git@github.com:kheer/kheer.git
 ```
 
-If you are contributing, please, fork the project and add both repositories as remotes
-```
+If you are contributing, please fork the project and add both repositories as remotes
+
+```sh
 $ # check the existing remote, here pointing to upstream
 $ git remote -v
 origin  git@github.com:kheer/kheer.git (fetch)
