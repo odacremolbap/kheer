@@ -1,12 +1,6 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# Output folder
+_output
 
-# Test binary, build with `go test -c`
-*.test
+# Local development assets. Place the files you don't want to push to the repo here
+_local
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
