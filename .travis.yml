@@ -12,9 +12,6 @@ git:
 notifications:
   email: false
 
-install:
-  - make download
-
 script:
   - make check  
   - go test -race -coverprofile=coverage.txt -covermode=atomic ./...
