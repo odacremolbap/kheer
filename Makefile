@@ -17,16 +17,19 @@ ALL_OS := linux darwin
 OS ?= $(shell go env GOOS)
 
 # image tag for go
-GO_IMAGE_TAG := 1.12.6
+GO_IMAGE := golang:1.12.5
+COMPILER_IMAGE := kheer-compile-$(GO_IMAGE)
 
 GCO_ENABLED := 0
 OUTPUT_DIR := _output
+
 
 export GO111MODULE=on
 
 all: \
 		build
 
+.PHONY: build
 build: \
 		prebuild-bin-$(ARCH)-$(OS)
 
@@ -49,25 +52,33 @@ prebuild-launch-%:
 
 	@$(MAKE) --no-print-directory BINARY=$(BINARY) ARCH=$(ARCH) OS=$(OS) launch-build
 
-launch-build:
+launch-build: compiler-image
 	$(eval OUTPUT_BIN_DIR = $(OUTPUT_DIR)/$(OS)/$(ARCH))
 
 ifneq ($(ARCH)-$(OS),arm64-darwin)
 	$(info ****** launch-build $(BINARY) for $(OS)/$(ARCH))
 	mkdir -p $(OUTPUT_BIN_DIR)
 
-	# TODO add non docker builds
 	docker run -ti --rm  \
-					-v "$$(pwd):/go/src/$(REPO)" \
+					-v "$$(pwd):/kheer" \
 					-e "CGO_ENABLED=$(CGO_ENABLED)" \
 					-e "GOOS=$(OS)" \
 					-e "GOARCH=$(ARCH)" \
-					-e "GO111MODULE=auto" \
-					golang:$(GO_IMAGE_TAG) \
-					go build $(GO_FLAGS) -ldflags "$(GO_LDFLAGS)" -o /go/src/$(REPO)/$(OUTPUT_BIN_DIR)/$(BINARY) $(REPO)/$(CMD_SRC_DIR)/$(BINARY)
+					-e "GO111MODULE=on" \
+					$(COMPILER_IMAGE) \
+					go build $(GO_FLAGS) -ldflags "$(GO_LDFLAGS)" -o ./$(OUTPUT_BIN_DIR)/$(BINARY) ./$(CMD_SRC_DIR)/$(BINARY)
+
 else
 	@rm -rf $(OUTPUT_BIN_DIR)
 endif
+
+# compiler-image creates a go based image that already contains the cached dependences.
+# This will speed up compiling at the launch-build step
+.PHONY: compiler-image
+compiler-image:
+	$(info ****** building cached dependencies container for compiling)
+	docker build -f build/Dockerfile . -t $(COMPILER_IMAGE) \
+		--build-arg GO_IMAGE=$(GO_IMAGE)
 
 
 .PHONY: check
