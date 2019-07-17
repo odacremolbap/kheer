@@ -33,14 +33,18 @@ $ git remote add origin git@github.com:<YOUR-USER>/kheer.git
 
 ## Make targets
 
+_User facing_ targets are
+
 - `clean`
 
     Deletes `./_output` folder.
 
-- `build`
+- `all` or `build`
 
-    Is the default taget. It compiles an amd64 binary for your current OS.
+    Is the default target. It compiles an amd64 binary for your current OS.
     Computer architecture and OS can be set using `OS` and `ARCH` environment variables. A docker Go image is used for compiling, and the result is stored at `./_output`.
+
+    Compilation process creates a docker image (`COMPILER_IMAGE` at Makefile) that includes all dependencies for caching.
 
 - `build-all`
 
@@ -49,3 +53,9 @@ $ git remote add origin git@github.com:<YOUR-USER>/kheer.git
 - `check`
 
     Perfoms unit tests, race detection, vet, and format checks.
+
+- `clean-compiler-images`
+
+    Builds generate a Go based image that includes cached dependencies. Compiling cached images can be removed using this target. This might come handy when changing the `GO_IMAGE` tag when using a new Go version, to delete existing images that will no longer be used.
+
+    If the image is deleted, a new one will be generated at the next build.

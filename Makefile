@@ -17,8 +17,12 @@ ALL_OS := linux darwin
 OS ?= $(shell go env GOOS)
 
 # image tag for go
-GO_IMAGE := golang:1.12.5
-COMPILER_IMAGE := kheer-compile-$(GO_IMAGE)
+GO_IMAGE := golang:1.12.7
+
+# image tag for go and cached dependencies
+# note: the clean-compiler-images target will delete any image that contains this string
+COMPILER_IMAGE_PREFIX := kheer-compile
+COMPILER_IMAGE := $(COMPILER_IMAGE_PREFIX)-$(GO_IMAGE)
 
 GCO_ENABLED := 0
 OUTPUT_DIR := _output
@@ -26,9 +30,11 @@ OUTPUT_DIR := _output
 
 export GO111MODULE=on
 
+# all is the default alias, and also an alias for build
 all: \
 		build
 
+# build will only compile the binary pointed by ARCH and OS variables
 .PHONY: build
 build: \
 		prebuild-bin-$(ARCH)-$(OS)
@@ -76,10 +82,15 @@ endif
 # This will speed up compiling at the launch-build step
 .PHONY: compiler-image
 compiler-image:
-	$(info ****** building cached dependencies container for compiling)
+	$(info ****** building compiling image)
 	docker build -f build/Dockerfile . -t $(COMPILER_IMAGE) \
 		--build-arg GO_IMAGE=$(GO_IMAGE)
 
+.PHONY: clean-compiler-images
+clean-compiler-images:
+	$(info ****** deleting all compiling images )
+	$(eval images := $(shell docker images | grep $(COMPILER_IMAGE_PREFIX) | tr -s ' ' | cut -d ' ' -f 3))
+	$(if $(strip $(images)), docker rmi -f $(images),)
 
 .PHONY: check
 check: test test-race vet gofmt
