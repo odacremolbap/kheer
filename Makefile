@@ -92,6 +92,11 @@ clean-compiler-images:
 	$(eval images := $(shell docker images | grep $(COMPILER_IMAGE_PREFIX) | tr -s ' ' | cut -d ' ' -f 3))
 	$(if $(strip $(images)), docker rmi -f $(images),)
 
+.PHONY: generate
+generate:
+	$(info ****** generate)
+	@(bash build/generate-for-crd.sh)
+
 .PHONY: check
 check: test test-race vet gofmt
 
@@ -114,6 +119,7 @@ vet: | test
 clean:
 	$(info ****** clean)
 	rm -rf _output
+	rm -rf _local/code-generator
 
 .PHONY: gofmt
 gofmt:
