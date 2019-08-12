@@ -6,11 +6,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-const (
-	// GroupName is the group name for the Kheer API
-	GroupName = "kheer.kheer.io"
-)
-
 var (
 	// SchemeBuilder collects the scheme builder functions for the Kheer API
 	SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
@@ -20,7 +15,7 @@ var (
 )
 
 // SchemeGroupVersion is the GroupVersion for the Kheer API
-var SchemeGroupVersion = schema.GroupVersion{Group: GroupName, Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: "kheer.kheer.io", Version: "v1alpha1"}
 
 // Resource gets a Kheer GroupResource for a specified resource
 func Resource(resource string) schema.GroupResource {
