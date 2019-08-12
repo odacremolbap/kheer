@@ -25,3 +25,12 @@ type Operation struct {
 	Spec   OperationSpec   `json:"spec"`
 	Status OperationStatus `json:"status"`
 }
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// OperationList is a set of Operations
+type OperationList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata"`
+	Items           []Operation `json:"items"`
+}
