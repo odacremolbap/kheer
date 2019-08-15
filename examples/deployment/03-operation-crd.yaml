@@ -1,0 +1,17 @@
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: operations.automation.kheer.io
+  labels:
+    app: kheer
+    component: ops
+spec:
+  group: automation.kheer.io
+  version: v1alpha1
+  scope: Namespaced
+  names:
+    kind: Operation
+    plural: operations
+
