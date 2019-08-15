@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Kheer() kheer.Interface
+	Automation() kheer.Interface
 }
 
-func (f *sharedInformerFactory) Kheer() kheer.Interface {
+func (f *sharedInformerFactory) Automation() kheer.Interface {
 	return kheer.New(f, f.namespace, f.tweakListOptions)
 }

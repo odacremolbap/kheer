@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kheer-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kheer-admin
+subjects:
+- kind: ServiceAccount
+  name: kheer-admin
+  namespace: kheer-sys
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: kheer-admin
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups: ["automation.kheer.io"]
+  resources: ["operations"]
+  verbs:
+  - get
+  - list
+  - watch
+  - put
+  - post
+  - patch
+---

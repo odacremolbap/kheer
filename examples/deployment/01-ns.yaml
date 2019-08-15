@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kheer-sys
+  labels:
+    app: kheer
+    component: sys
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kheer-ops
+  labels:
+    app: kheer
+    component: ops
+
+
+
