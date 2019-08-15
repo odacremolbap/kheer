@@ -61,13 +61,13 @@ func NewFilteredOperationInformer(client versioned.Interface, namespace string, 
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.KheerV1alpha1().Operations(namespace).List(options)
+				return client.AutomationV1alpha1().Operations(namespace).List(options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.KheerV1alpha1().Operations(namespace).Watch(options)
+				return client.AutomationV1alpha1().Operations(namespace).Watch(options)
 			},
 		},
 		&kheerv1alpha1.Operation{},

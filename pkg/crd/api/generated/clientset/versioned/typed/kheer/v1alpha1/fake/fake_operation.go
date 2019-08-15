@@ -30,13 +30,13 @@ import (
 
 // FakeOperations implements OperationInterface
 type FakeOperations struct {
-	Fake *FakeKheerV1alpha1
+	Fake *FakeAutomationV1alpha1
 	ns   string
 }
 
-var operationsResource = schema.GroupVersionResource{Group: "kheer.kheer.io", Version: "v1alpha1", Resource: "operations"}
+var operationsResource = schema.GroupVersionResource{Group: "automation.kheer.io", Version: "v1alpha1", Resource: "operations"}
 
-var operationsKind = schema.GroupVersionKind{Group: "kheer.kheer.io", Version: "v1alpha1", Kind: "Operation"}
+var operationsKind = schema.GroupVersionKind{Group: "automation.kheer.io", Version: "v1alpha1", Kind: "Operation"}
 
 // Get takes name of the operation, and returns the corresponding operation object, and an error if there is any.
 func (c *FakeOperations) Get(name string, options v1.GetOptions) (result *v1alpha1.Operation, err error) {

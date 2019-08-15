@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/kheer/kheer/pkg/crd/api/generated/clientset/versioned"
-	kheerv1alpha1 "github.com/kheer/kheer/pkg/crd/api/generated/clientset/versioned/typed/kheer/v1alpha1"
-	fakekheerv1alpha1 "github.com/kheer/kheer/pkg/crd/api/generated/clientset/versioned/typed/kheer/v1alpha1/fake"
+	automationv1alpha1 "github.com/kheer/kheer/pkg/crd/api/generated/clientset/versioned/typed/kheer/v1alpha1"
+	fakeautomationv1alpha1 "github.com/kheer/kheer/pkg/crd/api/generated/clientset/versioned/typed/kheer/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -76,7 +76,7 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 
 var _ clientset.Interface = &Clientset{}
 
-// KheerV1alpha1 retrieves the KheerV1alpha1Client
-func (c *Clientset) KheerV1alpha1() kheerv1alpha1.KheerV1alpha1Interface {
-	return &fakekheerv1alpha1.FakeKheerV1alpha1{Fake: &c.Fake}
+// AutomationV1alpha1 retrieves the AutomationV1alpha1Client
+func (c *Clientset) AutomationV1alpha1() automationv1alpha1.AutomationV1alpha1Interface {
+	return &fakeautomationv1alpha1.FakeAutomationV1alpha1{Fake: &c.Fake}
 }

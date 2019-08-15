@@ -56,7 +56,7 @@ type operations struct {
 }
 
 // newOperations returns a Operations
-func newOperations(c *KheerV1alpha1Client, namespace string) *operations {
+func newOperations(c *AutomationV1alpha1Client, namespace string) *operations {
 	return &operations{
 		client: c.RESTClient(),
 		ns:     namespace,

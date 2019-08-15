@@ -15,7 +15,7 @@ var (
 )
 
 // SchemeGroupVersion is the GroupVersion for the Kheer API
-var SchemeGroupVersion = schema.GroupVersion{Group: "kheer.kheer.io", Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: "automation.kheer.io", Version: "v1alpha1"}
 
 // Resource gets a Kheer GroupResource for a specified resource
 func Resource(resource string) schema.GroupResource {
